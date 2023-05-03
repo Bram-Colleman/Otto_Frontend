@@ -2,6 +2,5 @@
 </script>
 
 <template>
-  <main>
-  </main>
+ <RouterLink to="/register">Register</RouterLink>
 </template>
