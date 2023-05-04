@@ -1,6 +1,9 @@
 <script setup>
+function clearstorage() {
+    localStorage.clear();
+}
 </script>
 
 <template>
- <RouterLink to="/register">Register</RouterLink>
+ <RouterLink @click="clearstorage" to="/start">Logout</RouterLink>
 </template>

@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import Background from "../components/Background.vue";
 
 
 let givenName = ref("");
@@ -17,55 +16,57 @@ let email = ref("");
 let phone = ref("");
 let address = "";
 
-function register() {
+let passwordsMatch=ref(true);
+
+async function register() {
     address = street.value + " " + housenumber.value + ", " + postalcode.value + " " + city.value;
 
+    if(password.value != passwordCheck.value) {
+        passwordsMatch.value = !passwordsMatch.value;
+    }
+
+
 //   fetch("https://otto-backend.onrender.com/api/driver/create", {
-  fetch("http://localhost:3000/api/driver/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      givenName: givenName.value,
-      familyName: familyName.value,
-      dateOfBirth: dateOfBirth.value,
-      gender: gender.value,
-      address: address,
-      password: password.value,
-      passwordCheck: passwordCheck.value,
-      email: email.value,
-      phone: phone.value,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-      if (data.status === "success") {
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
-      } else {
-        console.log("Error");
-        message.value = true;
-      }
+    const x = await fetch("http://localhost:3000/api/driver/create", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        givenName: givenName.value,
+        familyName: familyName.value,
+        dateOfBirth: dateOfBirth.value,
+        gender: gender.value,
+        address: address,
+        password: password.value,
+        passwordCheck: passwordCheck.value,
+        email: email.value,
+        phone: phone.value,
+        }),
     });
+    const data = await x.json();
+    if (data.status === "success") {
+        localStorage.setItem("token", data.data.token);
+        window.location.href = "/";
+    } else {
+        console.error("Something went wrong!");
+    }
 }
 
-// let currentPage = 1;
+let currentPage = ref(1);
 
-// function nextPage() {
-
-// }
+function nextPage() {
+    currentPage.value++;
+}
 
 </script>
 
 <template>
-    <Background></Background>
-    <RouterLink to="/">Back</RouterLink>
+    <RouterLink to="/start">Back</RouterLink>
     <div class="card">
-        <h1 id="title">Registreren</h1>
+        <h1>Registreren</h1>
         <form @submit.prevent="register">
-            <div class="group">
+            <div class="group"  v-if="currentPage==1">
                 <label for="givenName">Voornaam</label>
                 <input type="text" name="givenName" v-model="givenName" placeholder="Voornaam">
                 <label for="familyName">Achternaam</label>
@@ -73,22 +74,24 @@ function register() {
                 <label for="email">E-mail</label>
                 <input type="email" name="email" v-model="email" placeholder="voorbeeld@otto.be">
             </div>
-            <div class="group hidden">
-                <div class="address">
-                    <label for="address">Adres</label>
-                    <div>
+
+            <div class="group" v-if="currentPage==2">
+                <div class="row">
+                    <div class="flex w65">
                         <label for="street">Straat</label>
                         <input type="text" name="street" v-model="street">
                     </div>
-                    <div>
+                    <div class="flex w33">
                         <label for="housenumber">Huisnummer</label>
                         <input type="text" name="housenumber" v-model="housenumber">
                     </div>
-                    <div>
+                </div>
+                <div class="row">
+                    <div class="flex w33">
                         <label for="postalcode">Postcode</label>
                         <input type="text" name="postalcode" v-model="postalcode">
                     </div>
-                    <div>
+                    <div class="flex w65">
                         <label for="city">Plaats</label>
                         <input type="text" name="city" v-model="city">
                     </div>
@@ -107,16 +110,24 @@ function register() {
                         <input type="radio" name="gender" value="X" id="other" v-model="gender"> <label for="other">Anders</label>
                     </div>
                 </div>
+            </div>
+
+            <div class="group" v-if="currentPage==3">
                 <label for="password">Wachtwoord</label>
                 <input type="password" name="password" v-model="password">
                 <label for="confirmPassword">Bevestig Wachtwoord</label>
+                <span v-if="passwordsMatch == false">Dit wachtwoordt komt niet overeen</span>
                 <input type="password" name="confirmPassword" v-model="passwordCheck">
-                <input type="submit" name="" value="Registreer">
+                <button type="submit">Registreer</button>
             </div>
-            <button @click="">Volgende</button>
+
+        </form>
+        <button @click="nextPage" v-if="currentPage!=3">Volgende</button>
+
+        <div class="container-itsme" v-if="currentPage==1">
             <div class="separator">Of</div>
             <button @click="" class="itsme"><img src="../assets/itsme.svg" alt="">Aanmelden met itsme</button>
-        </form>
+        </div>
     </div>
 </template>
 
@@ -127,18 +138,10 @@ function register() {
     padding: 43px 26px 0 26px;
     border-radius: 15px 15px 0px 0px;
 }
-#title {
-    text-align: center;
-    color: #3289F3;
-    font-family: 'urbancat_rgbold';
-    margin-top: 0;
-}
+
 .group {
     display: flex;
     flex-direction: column;
-}
-.hidden {
-    display: none;
 }
 .separator {
   display: flex;
@@ -171,6 +174,8 @@ function register() {
     align-items: center;
     justify-content: center;
     font-weight: 400;
+    width: 100%;
+    padding: .5rem 0;
 }
 .itsme img {
    width: 40px;
@@ -181,12 +186,27 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 20rem;
+    width: 100%;
 }
-.radio, .address>div {
+.radio {
     display: flex;
+    justify-content: space-around;
 }
-.address>div>input {
-    flex-grow: 1;
+
+.flex {
+    display: flex;
+    flex-direction: column;
 }
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+.w65 {
+    width: 65%;
+}
+.w33 {
+    width: 33%;
+}
+
 </style>
