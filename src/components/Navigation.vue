@@ -1,9 +1,14 @@
+<script setup>
+
+</script>
+
 <template>
     <div class="flex nav">
-        <img src="../assets/itsme.svg" alt="">
-        <img src="../assets/itsme.svg" alt="">
-        <img src="../assets/itsme.svg" alt="">
-        <img src="../assets/itsme.svg" alt="">
+        <RouterLink to="/"><img src="../assets/icons/home.svg" alt=""></RouterLink>
+        <RouterLink to="/calender"><img src="../assets/icons/calender.svg" alt=""></RouterLink>
+        <RouterLink to="/route"><img src="../assets/icons/route.svg" alt=""></RouterLink>
+        <RouterLink to="/chat"><img src="../assets/icons/chat.svg" alt=""></RouterLink>
+        <RouterLink to="/settings"><img src="../assets/icons/settings.svg" alt=""></RouterLink>
     </div>
 
 </template>
@@ -11,9 +16,16 @@
 <style scoped>
 .nav {
     position: fixed;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-around;
+
+    background: white;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
 }
 img {
-    background-color: #3289F3;
-    margin: 0  auto;
+    margin-top: 16px;
+    margin-bottom: 42px;
 }
+
 </style>
