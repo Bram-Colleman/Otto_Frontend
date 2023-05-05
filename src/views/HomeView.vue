@@ -9,11 +9,11 @@ let name = localStorage.getItem('name');
 </script>
 
 <template>
-  <Navigation></Navigation>
+  <Navigation v-bind:active="'home'"></Navigation>
   <RouterLink @click="clearstorage" to="/start">Logout</RouterLink>
   <div class="card">
-  <h1>Hi, {{name}} 👋</h1>
-</div>
+    <h1>Hi, {{name}} 👋</h1>
+  </div>
 </template>
 
 <style scoped>
