@@ -6,7 +6,11 @@ const props = defineProps(['active']);
 
 onMounted(() => {
     switch (props.active) {
-    case "home": {document.querySelector("#home").classList.add("active");} 
+    case "home": { document.querySelector("#home").classList.add("active"); break;} 
+    case "calender": {document.querySelector("#calender").classList.add("active"); break;} 
+    case "route": {document.querySelector("#route").classList.add("active"); break;} 
+    case "chat": {document.querySelector("#chat").classList.add("active"); break;} 
+    case "settings": {document.querySelector("#settings").classList.add("active"); break;} 
     }
 });
 
@@ -33,6 +37,7 @@ onMounted(() => {
 
     background: white;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+    flex-grow: 1;
 }
 img {
     margin-top: 16px;
