@@ -1,15 +1,12 @@
 <script setup>
 import Navigation from '../components/Navigation.vue';
 
-
-
-let name = localStorage.getItem('name');
 </script>
 
 <template>
-  <Navigation v-bind:active="'home'"></Navigation>
+  <Navigation v-bind:active="'route'"></Navigation>
   <div class="card">
-    <h1>Hi, {{name}} 👋</h1>
+    <h1>Routes</h1>
   </div>
 </template>
 

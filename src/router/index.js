@@ -4,14 +4,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      meta: {
-        requiresAuth: true
-      },
-      component: () => import('../views/HomeView.vue')
-    },
-    {
       path: '/register',
       name: 'register',
       component: () => import('../views/RegisterView.vue')
@@ -25,6 +17,46 @@ const router = createRouter({
       path: '/start',
       name: 'start',
       component: () => import('../views/Starterview.vue')
+    },
+    {
+      path: '/',
+      name: 'home',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/HomeView.vue')
+    },
+    {
+      path: '/calender',
+      name: 'calender',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/CalenderView.vue')
+    },
+    {
+      path: '/route',
+      name: 'route',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/RouteView.vue')
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/ChatView.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/SettingsView.vue')
     },
   ]
 })
