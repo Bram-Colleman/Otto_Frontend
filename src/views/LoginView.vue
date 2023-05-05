@@ -20,8 +20,8 @@ function login() {
     .then((response) => response.json())
     .then((data) => {
       if (data.status === "success") {
-        console.log(data);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("name", data.name.split(" ")[0]);
         window.location.href = "/";
       } else {
         console.error("Something went wrong!");
