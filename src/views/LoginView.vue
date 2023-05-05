@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 let email = ref("");
 let password = ref("");
+let error = ref(false);
 
 function login() {
 //   fetch("https://otto-backend.onrender.com/api/driver/create", {
@@ -23,10 +24,13 @@ function login() {
         localStorage.setItem("token", data.token);
         window.location.href = "/";
       } else {
-        console.log("Something went wrong!");
+        console.error("Something went wrong!");
+        error.value = !error.value;
       }
     });
 }
+
+
 </script>
 
 <template>
@@ -34,6 +38,7 @@ function login() {
     <div class="card">
         <h1>Inloggen</h1>
         <form @submit.prevent="login">
+          <span v-if="error" class="error center">E-mail of wachtwoord is incorrect!</span>
             <label for="email">E-mail</label>
             <input type="email" name="email" v-model="email" placeholder="voorbeeld@otto.be">
 

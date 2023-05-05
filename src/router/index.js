@@ -33,14 +33,36 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (localStorage.getItem("token") !== null) {
-      next()
-    } else {
-      next({ name: 'start' }) // go to wherever I'm going
+    if (isAuth().then(result => {
+      if(result) {
+        next();
+      } else {
+        next({ name: 'start' });
+      }
+    })){
     }
   } else {
     next() // does not require auth, make sure to always call next()!
   }
 })
+
+async function isAuth() {
+  //   fetch("https://otto-backend.onrender.com/api/driver/create", {
+    let x = await fetch("http://localhost:3000/api/driver/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          token: localStorage.getItem("token"),
+      }),
+    });
+    const data = await x.json();
+    if (data.status == "success") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 export default router
