@@ -4,6 +4,7 @@ html, body {
     padding: 0;
     font-family: 'Nunito Sans', sans-serif;
     overflow-x: hidden;
+    color: #00131D;
 }
 
 input {
@@ -62,6 +63,9 @@ h1 {
 .col {
     flex-direction: column;
 }
+.grow {
+    flex-grow: 1;
+}
 
 span a {
     font-family: 'Nunito Sans', sans-serif;
@@ -71,4 +75,9 @@ span a {
 
 .error {
   color: red;
+}
+
+a {
+    text-decoration: none;
+    color: #00131D;
 }
