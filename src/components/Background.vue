@@ -1,5 +1,5 @@
 <template>
-    <img src = "../assets/backgroundcar.svg" alt=""/>
+    <img src = "../assets/backgroundcar.svg" alt="" class="background"/>
 
 </template>
 

@@ -21,7 +21,7 @@ function login() {
     .then((data) => {
       if (data.status === "success") {
         localStorage.setItem("token", data.token);
-        localStorage.setItem("name", data.name.split(" ")[0]);
+        localStorage.setItem("name", data.name);
         window.location.href = "/";
       } else {
         console.error("Something went wrong!");
