@@ -7,6 +7,6 @@ function clearstorage() {
 </script>
 
 <template>
-  <Navigation></Navigation>
+  <Navigation v-bind:active="'home'"></Navigation>
  <RouterLink @click="clearstorage" to="/start">Logout</RouterLink>
 </template>
