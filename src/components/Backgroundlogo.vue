@@ -6,7 +6,7 @@
 <style scoped>
 img {
     background-color: #3289F3;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     top: 2rem;
     margin: 0  auto;
