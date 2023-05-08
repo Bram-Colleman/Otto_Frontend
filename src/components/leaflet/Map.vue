@@ -1,6 +1,6 @@
 <template>
     <div style="height:60vh; width:100vw;">
-      <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="onReady">
+      <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="onReady" :use-global-leaflet="false">
         <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           layer-type="base"
@@ -12,8 +12,7 @@
   
   <script>
   import "leaflet/dist/leaflet.css";
-  import { LMap, LTileLayer, LIcon } from "@vue-leaflet/vue-leaflet";
-
+  import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
   export default {
     components: {
@@ -26,7 +25,6 @@
         center: [51,4],
         longitude: null,
         latitude: null,
-        map: null,
       };
     },
     mounted() {
@@ -44,12 +42,11 @@
     },
     methods: {
         onReady (mapObject) {        
-            this.map = mapObject;
-                mapObject.options.center[0] = this.latitude;
-                mapObject.options.center[1] = this.longitude;
-                mapObject.panTo([this.latitude, this.longitude]);
+            mapObject.options.center[0] = this.latitude;
+            mapObject.options.center[1] = this.longitude;
+            mapObject.panTo([this.latitude, this.longitude]);
 
-            mapObject.locate();
+            // mapObject.locate();
         },
         onLocationFound(location){
         console.log(location)
@@ -57,36 +54,7 @@
     },
   };
   </script>
-  <!-- <script>
-  import "leaflet/dist/leaflet.css";
-  import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
-
-  export default {
-    components: {
-      LMap,
-      LTileLayer,
-    },
-    data() {
-      return {
-        map: null,
-        location: null,
-      };
-    },
-    methods: {
-        onReady() {
-            this.map = this.$refs["map"].mapObject;
-            this.map.locate();
-        },
-        onLocationFound(location){
-            console.log(l);
-            this.location = l;
-        }
-    },
-  };
-  </script> -->
-  
-  
 <style>
 .leaflet-control-attribution, .leaflet-control-zoom {
     display: none;
