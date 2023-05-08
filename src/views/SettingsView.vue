@@ -48,12 +48,12 @@ onMounted(() => {
     </div>
     <div class="background">
       <div class="settingflex">
-        <img src="../assets/icons/profile.svg" alt="mijn profiel"/>
+        <img src="../assets/icons/profile.svg" alt="mijn profiel" />
         <div class="lineheight">
           <p>Mijn profiel</p>
           <p class="p14">Pas mijn profiel aan</p>
         </div>
-        <img src="../assets/icons/arrow.svg" alt="arrow">
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
       </div>
       <div class="settingflex">
         <img src="../assets/icons/profile.svg" alt="mijn profiel" />
@@ -61,84 +61,116 @@ onMounted(() => {
           <p>Voorkeuren</p>
           <p class="p14">Pas mijn voorkeuren aan</p>
         </div>
-        <img src="../assets/icons/arrow.svg" alt="arrow">
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
       </div>
       <div class="settingflex">
         <img src="../assets/icons/privacy.svg" alt="mijn profiel" />
         <div class="lineheight">
           <p>Privacy</p>
         </div>
-        <img src="../assets/icons/arrow.svg" alt="arrow">
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
       </div>
       <div class="settingflex">
         <img src="../assets/icons/notification.svg" alt="mijn profiel" />
         <div class="lineheight">
           <p>Meldingen</p>
         </div>
-        <img src="../assets/icons/arrow.svg" alt="arrow">
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
       </div>
-          <div class="settingflex" @click="logout = !logout" >
-            <img src="../assets/icons/logout.svg" alt="mijn profiel" />
-            <div class="lineheight">
-              <p>Uitloggen</p>
-            </div>
-            <img src="../assets/icons/arrow.svg" alt="arrow">
-          </div>
+      <div class="settingflex" @click="logout = !logout">
+        <img src="../assets/icons/logout.svg" alt="mijn profiel" />
+        <div class="lineheight">
+          <p>Uitloggen</p>
+        </div>
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
+      </div>
     </div>
-</div>
-<div v-if="logout">
+  </div>
+  <div v-if="logout">
     <div class="darken"></div>
     <div class="flex col confirm">
-        <p>Ben je zeker dat je wilt uitloggen?</p>
-        <div class="flex grow">
-            <button @click="logout = !logout" id="confirmnee">Nee</button>
-            <RouterLink @click="clearstorage" to="/login">
-                <button>Ja</button>
-            </RouterLink>
-        </div>
+      <p>Ben je zeker dat je wilt uitloggen?</p>
+      <div class="flex grow">
+        <button @click="logout = !logout" id="confirmnee">Nee</button>
+        <RouterLink @click="clearstorage" to="/login">
+          <button>Ja</button>
+        </RouterLink>
+      </div>
     </div>
-</div>
+  </div>
+  <div class="container2">
+    <p>More</p>
+    <div class="background2">
+      <div class="settingflex">
+        <img src="../assets/icons/heart.svg" alt="over ons" />
+        <div class="lineheight">
+          <p>Over ons</p>
+        </div>
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
+      </div>
+      <div class="settingflex">
+        <img src="../assets/icons/bell.svg" alt="feedback" />
+        <div class="lineheight">
+          <p>Geef feedback</p>
+        </div>
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
+      </div>
+      <div class="settingflex">
+        <img src="../assets/icons/heart.svg" alt="contact" />
+        <div class="lineheight">
+          <p>Contact</p>
+        </div>
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
+      </div>
+      <div class="settingflex">
+        <img src="../assets/icons/bell.svg" alt="fout rapporteren" />
+        <div class="lineheight">
+          <p>Fout rapporteren</p>
+        </div>
+        <img src="../assets/icons/arrow.svg" alt="arrow" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-
 .darken {
-    background-color: black;
-    opacity: .5;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+  background-color: black;
+  opacity: 0.5;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
-.confirm{
-    text-align: center;
-    position: fixed;
-    background-color: white;
-    width: 85%;
-    border-radius: 5px;
-    box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.06);
-    top: 50vh;
-    left: 0;
-    transform: translateY(-50%);
-    margin: 0 7.5%;
-    padding: 1rem 0;
-
+.confirm {
+  text-align: center;
+  position: fixed;
+  background-color: white;
+  width: 85%;
+  border-radius: 5px;
+  box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.06);
+  top: 50vh;
+  left: 0;
+  transform: translateY(-50%);
+  margin: 0 7.5%;
+  padding: 1rem 0;
 }
 .grow {
-    justify-content: space-around;
+  justify-content: space-around;
 }
 .confirm a {
-    margin: 0 !important;
+  margin: 0 !important;
 }
-.confirmnee, .confirm a {
-    margin: .5rem;
-    width: 45%;
+.confirmnee,
+.confirm a {
+  margin: 0.5rem;
+  width: 45%;
 }
 #confirmnee {
-    background-color: rgba(223,223,223,1);
-    color: #00131D;
-    width: 50%;
+  background-color: rgba(223, 223, 223, 1);
+  color: #00131d;
+  width: 50%;
 }
 .lineheight {
   line-height: 0.2rem;
@@ -147,7 +179,7 @@ onMounted(() => {
 }
 .p14 {
   font-size: 14px;
-  color: #C2C9CC;
+  color: #c2c9cc;
   margin: 0;
 }
 .settingflex {
@@ -163,11 +195,26 @@ onMounted(() => {
   margin-top: 1.5rem;
   padding: 0 1.5rem;
 }
+
+.background2 {
+  background: #ffffff;
+  box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.06);
+  border-radius: 5px;
+  padding: 0 1.5rem;
+  margin-bottom: 8rem;
+}
 .container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   background-color: white;
-  padding: 4rem 2rem;
+  padding: 1rem 2rem 0;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0rem 2rem;
 }
 
 h2 {
