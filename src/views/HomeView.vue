@@ -20,7 +20,4 @@ let name = localStorage.getItem('name').split(" ")[0];
   padding-left: 0!important;
   padding-right: 0!important;
 }
-.map {
-  border-radius: 10px;
-}
 </style>

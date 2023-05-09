@@ -16,10 +16,8 @@ onMounted(() => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    body: JSON.stringify({
-      token: localStorage.getItem("token"),
-    }),
   })
     .then((response) => response.json())
     .then((data) => {

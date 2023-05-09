@@ -29,6 +29,15 @@ const range = ref({
 </template>
 
 <style>
+.vc-time-select-group {
+  border: none;
+}
+.vc-time-select-group select{
+  border: #accffb 1px solid;
+  width: 2rem;
+  margin: 0 .5rem;
+}
+
 .kalender button {
   background-color: white;
 }
