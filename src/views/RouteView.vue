@@ -20,11 +20,18 @@ onMounted(() => {
     .then((response) => response.json())
     .then((data) => {
       rides.value = data.rides;
+
+      for(let i = 0; i < rides.value.length; i++) {
+        try {
+          rides.value[i].destination = rides.value[i].destination.split(",")[0] +", " + rides.value[i].destination.split(",")[1].slice(5);
+        } catch {
+          console.log(rides.value[i].destination);
+        }
+      }
     });
 });
-moment.locale("es");
-moment().tz("America/Los_Angeles").format();
-console.log(rides.value[0]);
+
+
 </script>
 
 <template>
@@ -39,12 +46,15 @@ console.log(rides.value[0]);
             <div class="flextime">
               <img src="../assets/icons/clock.svg" alt="clock" />
               <span>{{
-                moment(ride.timeStamp).format("DD MMMM YYYY HH:mm")
+                moment(ride.timeStamp).format("DD MMM YYYY - HH:mm")
               }}</span>
             </div>
             <div class="flexadress">
               <img src="../assets/icons/ping.svg" alt="location" />
-              <span>{{ ride.startlat }}</span>
+              <span>{{ 
+              ride.destination
+
+              }}</span>
             </div>
           </div>
           <div class="rideicons">
