@@ -4,7 +4,6 @@ import { DatePicker } from "v-calendar";
 import "v-calendar/style.css";
 import moment from "moment-timezone";
 
-
 let availabilities = [];
 const attrs = ref([
   {
@@ -38,11 +37,11 @@ function loadData() {
     let timeLabel = begintijd + " - " + eindtijd;
     attrs.value.push({
       highlight: "green",
-      popover: {label: timeLabel, visibility:"click"},
+      popover: { label: timeLabel, visibility: "click" },
       // dates: [new Date(item.beginDate), new Date(item.endDate)],
       dates: {
         start: new Date(item.beginDate),
-        end: new Date(item.endDate)
+        end: new Date(item.endDate),
       },
     });
   });
@@ -84,14 +83,28 @@ const rover = ref({
     timezone="Europe/Amsterdam"
     is24hr
   />
-  <!-- TODO: fix styling -->
-  <button v-if="rover.start" style="margin: -.25rem 0;" @click="sendAvailability">Voeg beschikbaarheid toe</button>
+  <button class="plus" v-if="rover.start" @click="sendAvailability">+</button>
 </template>
 
 <style>
+.plus {
+  line-height: 0;
+  font-size: 2rem;
+  position: absolute;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  left: calc(50% - 60px / 2 + 150px);
+  top: calc(50% - 60px / 2 + 260px);
+
+  /* Primary Blue */
+
+  background: #3289f3;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+}
 
 .vc-time-picker.vc-attached {
-border: none!important;
+  border: none !important;
 }
 .vc-time-select-group {
   background: none;
@@ -104,8 +117,9 @@ border: none!important;
   height: 3rem;
   margin: 0 0.5rem;
 }
-.vc-base-select select.vc-align-left, .vc-base-select select.vc-align-right {
-  text-align: center!important;
+.vc-base-select select.vc-align-left,
+.vc-base-select select.vc-align-right {
+  text-align: center !important;
 }
 
 .kalender button {
