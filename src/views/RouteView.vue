@@ -4,6 +4,10 @@ import Routedetails from "../components/Routedetails.vue";
 import { onMounted, ref } from "vue";
 import moment from "moment";
 
+moment.locale("nl", {
+  monthsShort: "jan_feb_mrt_apr_mei_jun_jul_aug_sep_okt_nov_dec".split("_"),
+});
+
 let rides = ref([]);
 let showless = ref(true);
 let detail = ref(false);
@@ -94,9 +98,7 @@ onMounted(() => {
             <div class="clientinfo">
               <div class="flextime">
                 <img src="../assets/icons/clock.svg" alt="clock" />
-                <span>{{
-                  moment(ride.timeStamp).format("DD MMM YYYY - HH:mm")
-                }}</span>
+                <span>{{ moment(ride.timeStamp).format("LLL") }}</span>
               </div>
               <div class="flexadress">
                 <img src="../assets/icons/ping.svg" alt="location" />
