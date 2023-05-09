@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { DatePicker } from "v-calendar";
 import "v-calendar/style.css";
+import moment from "moment-timezone";
 
+
+let availabilities = [];
 const attrs = ref([
   {
     key: "today",
@@ -11,31 +14,79 @@ const attrs = ref([
   },
 ]);
 
-const range = ref({
-  start: new Date(),
-  end: new Date(),
+onMounted(() => {
+  //  fetch("https://otto-backend.onrender.com/api/ride/getbydriver"
+  let apiUrl = "http://localhost:3000/api/availability/getbydriver";
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      availabilities = data.availabilities;
+      loadData();
+    });
+});
+
+function loadData() {
+  availabilities.forEach((item) => {
+    const begintijd = moment(item.beginDate).add(2,"hours").format("HH:mm");
+    const eindtijd = moment(item.endDate).add(2,"hours").format("HH:mm");
+    let timeLabel = begintijd + " - " + eindtijd;
+    attrs.value.push({
+      highlight: "green",
+      popover: {label: timeLabel, visibility:"click"},
+      // dates: [new Date(item.beginDate), new Date(item.endDate)],
+      dates: {
+        start: new Date(item.beginDate),
+        end: new Date(item.endDate)
+      },
+    });
+  });
+}
+
+const rover = ref({
+  start: null,
+  end: null,
 });
 </script>
 
 <template>
   <DatePicker
     class="kalender"
-    v-model.range="range"
+    v-model.range="rover"
     mode="dateTime"
     :attributes="attrs"
     transparent
     borderless
+    timezone="Europe/Amsterdam"
+    is24hr
   />
+  <!-- TODO: fix styling -->
+  <button v-if="rover.start" style="margin: -.25rem 0;" @click="">Voeg beschikbaarheid toe</button>
 </template>
 
 <style>
-.vc-time-select-group {
-  border: none;
+
+.vc-time-picker.vc-attached {
+border: none!important;
 }
-.vc-time-select-group select{
+.vc-time-select-group {
+  background: none;
+  border: none;
+  height: 3rem;
+}
+.vc-time-select-group select {
   border: #accffb 1px solid;
-  width: 2rem;
-  margin: 0 .5rem;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0.5rem;
+}
+.vc-base-select select.vc-align-left, .vc-base-select select.vc-align-right {
+  text-align: center!important;
 }
 
 .kalender button {
@@ -44,41 +95,5 @@ const range = ref({
 
 .kalender {
   width: 100%;
-}
-
-.vc-weekday-7,
-.vc-weekday-1 {
-  color: #3289f3;
-}
-
-.vc-light {
-  --vc-hover-bg: #3289f3;
-  --vc-focus-ring: #3289f3;
-}
-
-.vc-blue {
-  --vc-accent-50: #3289f3;
-  --vc-accent-100: #3289f3;
-  --vc-accent-200: #3289f3;
-  --vc-accent-300: #3289f3;
-  --vc-accent-400: #3289f3;
-  --vc-accent-500: #3289f3;
-  --vc-accent-600: #3289f3;
-  --vc-accent-700: #3289f3;
-  --vc-accent-800: #3289f3;
-  --vc-accent-900: #3289f3;
-}
-
-.vc-gray {
-  --vc-accent-50: #accffb;
-  --vc-accent-100: #accffb;
-  --vc-accent-200: #accffb;
-  --vc-accent-300: #accffb;
-  --vc-accent-400: #accffb;
-  --vc-accent-500: #accffb;
-  --vc-accent-600: #accffb;
-  --vc-accent-700: #accffb;
-  --vc-accent-800: #accffb;
-  --vc-accent-900: #accffb;
 }
 </style>
