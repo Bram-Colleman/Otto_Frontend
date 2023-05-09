@@ -1,63 +1,45 @@
-<template>
-    <div style="height:60vh; width:100vw;">
-      <l-map ref="map" v-model:zoom="zoom" :center="center" @ready="onReady" :use-global-leaflet="false">
-        <l-tile-layer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          layer-type="base"
-          name="OpenStreetMap"
-        ></l-tile-layer>
-      </l-map>
-    </div>
-  </template>
+<script setup>
+  import { onMounted, ref } from "vue";
+  import 'mapbox-gl/dist/mapbox-gl.css';
+  import { MapboxMap, MapboxGeolocateControl  } from '@studiometa/vue-mapbox-gl';
+
+
+  onMounted(() => {
+    setTimeout(() => {
+      document.querySelector(".mapboxgl-ctrl-geolocate").click();
+    }, 400);
+    localStorage.setItem("lastloc", )
+  });
   
-  <script>
-  import "leaflet/dist/leaflet.css";
-  import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
+</script>
 
-  export default {
-    components: {
-      LMap,
-      LTileLayer,
-    },
-    data() {
-      return {
-        zoom: 16,
-        center: [51,4],
-        longitude: null,
-        latitude: null,
-      };
-    },
-    mounted() {
-        const successCallback = (position) => {
-          this.center = [position.coords.latitude,position.coords.longitude];
-            this.latitude = position.coords.latitude;
-            this.longitude = position.coords.longitude;
-        };
-
-        const errorCallback = (error) => {
-          console.log(error);
-        };
-
-        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
-    },
-    methods: {
-        onReady (mapObject) {        
-            mapObject.options.center[0] = this.latitude;
-            mapObject.options.center[1] = this.longitude;
-            mapObject.panTo([this.latitude, this.longitude]);
-
-            // mapObject.locate();
-        },
-        onLocationFound(location){
-        console.log(location)
-        }
-    },
-  };
-  </script>
+<template>
+  <MapboxMap
+  style="height: 60vh"
+  access-token="pk.eyJ1IjoiYnJhbWNvbGxlbWFuIiwiYSI6ImNsaGc1ZWFvcTB6MXkzcW80bDFza3pvNGoifQ.367IFe_vrfB9Efzy72dddg"
+  map-style="mapbox://styles/mapbox/streets-v11"
+  :center="[0, 0]"
+  :zoom="16"
+  @mb-created="(mapInstance) => map = mapInstance"
+  >
+    <MapboxGeolocateControl 
+    :trackUserLocation="true"
+    :position="'bottom-right'"
+    />
+  </MapboxMap>
+</template>
 
 <style>
-.leaflet-control-attribution, .leaflet-control-zoom {
-    display: none;
+.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-attrib {
+    display: none !important;
+}
+.mapboxgl-ctrl-geolocate {
+  margin: .5rem;
+}
+.mapboxgl-ctrl-icon {
+  background-size: 2.5rem;
+}
+.mapboxgl-ctrl {
+  margin: 2rem 1rem!important;
 }
 </style>
-    
