@@ -3,9 +3,17 @@ import Navigation from "../components/Navigation.vue";
 import Routedetails from "../components/Routedetails.vue";
 import { onMounted, ref } from "vue";
 import moment from "moment-timezone";
+import { OnClickOutside } from '@vueuse/components';
 
 let rides = ref([]);
 let showless = ref(true);
+let detail = ref(false);
+let detailid = ref();
+
+function toggledetail(id) {
+  detailid.value = id;
+  detail.value = !detail.value;
+}
 
 //fetch rides by driver and display them
 
@@ -41,11 +49,12 @@ onMounted(() => {
   <Navigation v-bind:active="'route'"></Navigation>
   <div class="card">
     <h1>Routes</h1>
-    <Routedetails v-bind:id="'645a644ebd60776720bd7b16'" />
+    <Routedetails v-bind:id="detailid" v-if="detail" @close="detail = !detail"/>
     <div v-if="rides[0]">
       <span><strong>Mijn routes</strong></span>
       <div v-if="showless">
         <div v-for="ride in rides.slice(0, 2)" :key="rides.id">
+          <!-- <Routedetails v-bind:id="ride._id" v-if="detail" /> -->
           <div class="background">
             <div class="clientinfo">
               <div class="flextime">
@@ -60,7 +69,7 @@ onMounted(() => {
               </div>
             </div>
             <div class="rideicons">
-              <img id="target" src="../assets/icons/target.svg" alt="target" />
+              <img id="target" src="../assets/icons/target.svg" alt="target" @click="toggledetail(ride._id)"/>
               <img src="../assets/icons/chatblue.svg" alt="chat" />
             </div>
           </div>
@@ -86,7 +95,7 @@ onMounted(() => {
               </div>
             </div>
             <div class="rideicons">
-              <img id="target" src="../assets/icons/target.svg" alt="target" />
+              <img id="target" src="../assets/icons/target.svg" alt="target" @click="toggledetail(ride._id)"/>
               <img src="../assets/icons/chatblue.svg" alt="chat" />
             </div>
           </div>
