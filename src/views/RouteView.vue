@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 import moment from "moment-timezone";
 
 let rides = ref([]);
+let showless = ref(true);
 
 //fetch rides by driver and display them
 
@@ -20,11 +21,19 @@ onMounted(() => {
     .then((response) => response.json())
     .then((data) => {
       rides.value = data.rides;
+
+      for (let i = 0; i < rides.value.length; i++) {
+        try {
+          rides.value[i].destination =
+            rides.value[i].destination.split(",")[0] +
+            ", " +
+            rides.value[i].destination.split(",")[1].slice(5);
+        } catch {
+          console.log(rides.value[i].destination);
+        }
+      }
     });
 });
-moment.locale("es");
-moment().tz("America/Los_Angeles").format();
-console.log(rides.value[0]);
 </script>
 
 <template>
@@ -33,35 +42,73 @@ console.log(rides.value[0]);
     <h1>Routes</h1>
     <div v-if="rides[0]">
       <span><strong>Mijn routes</strong></span>
-      <div v-for="ride in rides" :key="rides.id">
-        <div class="background">
-          <div class="clientinfo">
-            <div class="flextime">
-              <img src="../assets/icons/clock.svg" alt="clock" />
-              <span>{{
-                moment(ride.timeStamp).format("DD MMMM YYYY HH:mm")
-              }}</span>
+      <div v-if="showless">
+        <div v-for="ride in rides.slice(0, 2)" :key="rides.id">
+          <div class="background">
+            <div class="clientinfo">
+              <div class="flextime">
+                <img src="../assets/icons/clock.svg" alt="clock" />
+                <span>{{
+                  moment(ride.timeStamp).format("DD MMM YYYY - HH:mm")
+                }}</span>
+              </div>
+              <div class="flexadress">
+                <img src="../assets/icons/ping.svg" alt="location" />
+                <span>{{ ride.destination }}</span>
+              </div>
             </div>
-            <div class="flexadress">
-              <img src="../assets/icons/ping.svg" alt="location" />
-              <span>{{ ride.startlat }}</span>
+            <div class="rideicons">
+              <img id="target" src="../assets/icons/target.svg" alt="target" />
+              <img src="../assets/icons/chatblue.svg" alt="chat" />
             </div>
-          </div>
-          <div class="rideicons">
-            <img id="target" src="../assets/icons/target.svg" alt="target" />
-            <img src="../assets/icons/chatblue.svg" alt="chat" />
           </div>
         </div>
+        <div class="flex" style="justify-content: flex-end;">
+          <span @click="showless = !showless" class="link"><strong>Bekijk meer</strong></span>
+        </div>
+
+      </div>
+      <div v-else>
+        <div v-for="ride in rides" :key="rides.id">
+          <div class="background">
+            <div class="clientinfo">
+              <div class="flextime">
+                <img src="../assets/icons/clock.svg" alt="clock" />
+                <span>{{
+                  moment(ride.timeStamp).format("DD MMM YYYY - HH:mm")
+                }}</span>
+              </div>
+              <div class="flexadress">
+                <img src="../assets/icons/ping.svg" alt="location" />
+                <span>{{ ride.destination }}</span>
+              </div>
+            </div>
+            <div class="rideicons">
+              <img id="target" src="../assets/icons/target.svg" alt="target" />
+              <img src="../assets/icons/chatblue.svg" alt="chat" />
+            </div>
+          </div>
+        </div>
+        <div class="flex" style="justify-content: flex-end;">
+          <span @click="showless = !showless" class="link"><strong>Bekijk minder</strong></span>
+        </div>
+
       </div>
     </div>
 
     <div v-if="rides[0] === undefined" class="msg">
       <span>You don't have any rides</span>
     </div>
+
+    
   </div>
 </template>
 
 <style scoped>
+.link {
+  text-align: right;
+  color: #3289F3;
+}
 .card {
   margin-bottom: 8rem;
 }
