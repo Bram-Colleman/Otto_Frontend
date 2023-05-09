@@ -33,8 +33,8 @@ onMounted(() => {
 
 function loadData() {
   availabilities.forEach((item) => {
-    const begintijd = moment(item.beginDate).add(2,"hours").format("HH:mm");
-    const eindtijd = moment(item.endDate).add(2,"hours").format("HH:mm");
+    const begintijd = moment(item.beginDate).format("HH:mm");
+    const eindtijd = moment(item.endDate).format("HH:mm");
     let timeLabel = begintijd + " - " + eindtijd;
     attrs.value.push({
       highlight: "green",
