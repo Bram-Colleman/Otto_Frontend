@@ -7,7 +7,7 @@
   onMounted(() => {
     setTimeout(() => {
       document.querySelector(".mapboxgl-ctrl-geolocate").click();
-    }, 400);
+    }, 1000);
   });
   
 </script>
