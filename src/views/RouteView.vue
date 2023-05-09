@@ -2,8 +2,7 @@
 import Navigation from "../components/Navigation.vue";
 import Routedetails from "../components/Routedetails.vue";
 import { onMounted, ref } from "vue";
-import moment from "moment-timezone";
-import { OnClickOutside } from '@vueuse/components';
+import moment from "moment";
 
 let rides = ref([]);
 let showless = ref(true);
@@ -49,7 +48,11 @@ onMounted(() => {
   <Navigation v-bind:active="'route'"></Navigation>
   <div class="card">
     <h1>Routes</h1>
-    <Routedetails v-bind:id="detailid" v-if="detail" @close="detail = !detail"/>
+    <Routedetails
+      v-bind:id="detailid"
+      v-if="detail"
+      @close="detail = !detail"
+    />
     <div v-if="rides[0]">
       <span><strong>Mijn routes</strong></span>
       <div v-if="showless">
@@ -69,15 +72,21 @@ onMounted(() => {
               </div>
             </div>
             <div class="rideicons">
-              <img id="target" src="../assets/icons/target.svg" alt="target" @click="toggledetail(ride._id)"/>
+              <img
+                id="target"
+                src="../assets/icons/target.svg"
+                alt="target"
+                @click="toggledetail(ride._id)"
+              />
               <img src="../assets/icons/chatblue.svg" alt="chat" />
             </div>
           </div>
         </div>
-        <div class="flex" style="justify-content: flex-end;">
-          <span @click="showless = !showless" class="link"><strong>Bekijk meer</strong></span>
+        <div class="flex" style="justify-content: flex-end">
+          <span @click="showless = !showless" class="link"
+            ><strong>Bekijk meer</strong></span
+          >
         </div>
-
       </div>
       <div v-else>
         <div v-for="ride in rides" :key="rides.id">
@@ -95,30 +104,34 @@ onMounted(() => {
               </div>
             </div>
             <div class="rideicons">
-              <img id="target" src="../assets/icons/target.svg" alt="target" @click="toggledetail(ride._id)"/>
+              <img
+                id="target"
+                src="../assets/icons/target.svg"
+                alt="target"
+                @click="toggledetail(ride._id)"
+              />
               <img src="../assets/icons/chatblue.svg" alt="chat" />
             </div>
           </div>
         </div>
-        <div class="flex" style="justify-content: flex-end;">
-          <span @click="showless = !showless" class="link"><strong>Bekijk minder</strong></span>
+        <div class="flex" style="justify-content: flex-end">
+          <span @click="showless = !showless" class="link"
+            ><strong>Bekijk minder</strong></span
+          >
         </div>
-
       </div>
     </div>
 
     <div v-if="rides[0] === undefined" class="msg">
       <span>You don't have any rides</span>
     </div>
-
-
   </div>
 </template>
 
 <style scoped>
 .link {
   text-align: right;
-  color: #3289F3;
+  color: #3289f3;
 }
 .card {
   margin-bottom: 8rem;
