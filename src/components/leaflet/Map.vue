@@ -8,7 +8,6 @@
     setTimeout(() => {
       document.querySelector(".mapboxgl-ctrl-geolocate").click();
     }, 400);
-    localStorage.setItem("lastloc", )
   });
   
 </script>
