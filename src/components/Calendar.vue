@@ -48,6 +48,25 @@ function loadData() {
   });
 }
 
+function sendAvailability() {
+  let apiUrl = "http://localhost:3000/api/availability/create";
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({
+      beginDate: rover.value.start,
+      endDate: rover.value.end,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      window.location.reload();
+    });
+}
+
 const rover = ref({
   start: null,
   end: null,
@@ -66,7 +85,7 @@ const rover = ref({
     is24hr
   />
   <!-- TODO: fix styling -->
-  <button v-if="rover.start" style="margin: -.25rem 0;" @click="">Voeg beschikbaarheid toe</button>
+  <button v-if="rover.start" style="margin: -.25rem 0;" @click="sendAvailability">Voeg beschikbaarheid toe</button>
 </template>
 
 <style>
