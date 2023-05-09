@@ -1,5 +1,6 @@
 <script setup>
 import Navigation from "../components/Navigation.vue";
+import Routedetails from "../components/Routedetails.vue";
 import { onMounted, ref } from "vue";
 import moment from "moment-timezone";
 
@@ -40,6 +41,7 @@ onMounted(() => {
   <Navigation v-bind:active="'route'"></Navigation>
   <div class="card">
     <h1>Routes</h1>
+    <Routedetails />
     <div v-if="rides[0]">
       <span><strong>Mijn routes</strong></span>
       <div v-if="showless">
