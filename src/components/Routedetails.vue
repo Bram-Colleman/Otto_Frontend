@@ -1,4 +1,31 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from "vue";
+
+
+const props = defineProps(['id']);
+const ride = ref();
+onMounted(() => {
+  console.log(props.id);
+  fetch("http://localhost:3000/api/ride/getbyid", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      "id": props.id,
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "success") {
+        console.log(data);
+      } else {
+        console.error("Something went wrong!");
+      }
+    });
+
+});
+</script>
 
 <template>
   <div class="background">

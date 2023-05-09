@@ -41,7 +41,7 @@ onMounted(() => {
   <Navigation v-bind:active="'route'"></Navigation>
   <div class="card">
     <h1>Routes</h1>
-    <Routedetails />
+    <Routedetails v-bind:id="'645a644ebd60776720bd7b16'" />
     <div v-if="rides[0]">
       <span><strong>Mijn routes</strong></span>
       <div v-if="showless">
@@ -102,7 +102,7 @@ onMounted(() => {
       <span>You don't have any rides</span>
     </div>
 
-    
+
   </div>
 </template>
 
