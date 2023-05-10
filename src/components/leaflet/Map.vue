@@ -14,7 +14,7 @@
 
 <template>
   <MapboxMap
-  style="height: 60vh"
+  style="height: 65vh"
   access-token="pk.eyJ1IjoiYnJhbWNvbGxlbWFuIiwiYSI6ImNsaGc1ZWFvcTB6MXkzcW80bDFza3pvNGoifQ.367IFe_vrfB9Efzy72dddg"
   map-style="mapbox://styles/mapbox/streets-v11"
   :center="[0, 0]"

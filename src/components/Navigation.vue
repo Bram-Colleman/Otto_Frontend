@@ -31,7 +31,7 @@ onMounted(() => {
 <style scoped>
 .nav {
     position: fixed;
-    bottom: 0;
+    bottom: -2rem;
     width: 100%;
     justify-content: space-around;
 
