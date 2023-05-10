@@ -57,7 +57,7 @@ function getRides() {
 }
 
 function getNewRides() {
-  const apiUrl = "http://localhost:3000/api/ride/getavailablerides";
+  const apiUrl = "https://otto-backend.onrender.com/api/ride/getavailablerides";
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -83,21 +83,21 @@ function getNewRides() {
 }
 
 function accept(rideId) {
-  const apiUrl = "http://localhost:3000/api/ride/accept";
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        id: rideId,
+  fetch("https://otto-backend.onrender.com/api/ride/accept", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({
+      id: rideId,
     }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      getRides();
+      getNewRides();
+    });
 }
 </script>
 
@@ -179,8 +179,8 @@ function accept(rideId) {
       <span>Er zijn momenteel geen beschikbare routes</span>
     </div>
 
+    <span><strong>Mijn routes</strong></span>
     <div v-if="rides[0]">
-      <span><strong>Mijn routes</strong></span>
       <div v-if="showless">
         <div v-for="ride in rides.slice(0, 2)" :key="rides.id">
           <div class="background">
@@ -246,7 +246,7 @@ function accept(rideId) {
     </div>
 
     <div v-if="rides[0] === undefined" class="msg">
-      <span>You don't have any rides</span>
+      <span>Je hebt geen routes gepland</span>
     </div>
   </div>
 </template>
