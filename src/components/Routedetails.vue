@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import moment from "moment-timezone";
+import moment from "moment";
 
 const emits = defineEmits(["close"]);
 
@@ -24,7 +24,7 @@ onMounted(() => {
           ride.value.destination.split(",")[0] +
           ", " +
           ride.value.destination.split(",")[1].slice(5);
-        ride.value.timeStamp = moment(ride.timeStamp).format("DD MMM YYYY - HH:mm");
+        ride.value.timeStamp = moment(ride.value.timeStamp).format("DD MMM YYYY - HH:mm");
       } else {
         console.error("Something went wrong!");
       }
