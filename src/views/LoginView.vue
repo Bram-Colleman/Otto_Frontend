@@ -6,8 +6,7 @@ let password = ref("");
 let error = ref(false);
 
 function login() {
-//   fetch("https://otto-backend.onrender.com/api/driver/create", {
-  fetch("http://localhost:3000/api/driver/login", {
+  fetch("https://otto-backend.onrender.com/api/driver/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

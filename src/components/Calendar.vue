@@ -14,8 +14,7 @@ const attrs = ref([
 ]);
 
 onMounted(() => {
-  //  fetch("https://otto-backend.onrender.com/api/ride/getbydriver"
-  let apiUrl = "http://localhost:3000/api/availability/getbydriver";
+  let apiUrl = "https://otto-backend.onrender.com/api/availability/getbydriver";
   fetch(apiUrl, {
     method: "POST",
     headers: {
@@ -48,7 +47,7 @@ function loadData() {
 }
 
 function sendAvailability() {
-  let apiUrl = "http://localhost:3000/api/availability/create";
+  let apiUrl = "https://otto-backend.onrender.com/api/availability/create";
   fetch(apiUrl, {
     method: "POST",
     headers: {

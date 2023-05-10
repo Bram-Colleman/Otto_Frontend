@@ -7,7 +7,7 @@ const emits = defineEmits(["close"]);
 const props = defineProps(["id"]);
 const ride = ref({ destination: "", residents: [], timeStamp: "" });
 onMounted(() => {
-  fetch("http://localhost:3000/api/ride/getbyid", {
+  fetch("https://otto-backend.onrender.com/api/ride/getbyid", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +44,6 @@ onMounted(() => {
         </div>
         <div class="flexcontent">
           <img src="../assets/icons/flag.svg" alt="vlag" />
-          <!-- <span>Steenstraat 51, 2800 Mechelen</span> -->
           <span>{{ ride.destination }}</span>
         </div>
         <div class="flexcontent">

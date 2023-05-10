@@ -26,8 +26,7 @@ async function register() {
     }
 
 
-//   fetch("https://otto-backend.onrender.com/api/driver/create", {
-    const x = await fetch("http://localhost:3000/api/driver/create", {
+    const x = await fetch("https://otto-backend.onrender.com/api/driver/create", {
         method: "POST",
         headers: {
         "Content-Type": "application/json",
