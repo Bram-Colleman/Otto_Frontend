@@ -79,8 +79,7 @@ router.beforeEach((to, from, next) => {
 })
 
 async function isAuth() {
-  //   fetch("https://otto-backend.onrender.com/api/driver/create", {
-    let x = await fetch("http://localhost:3000/api/driver/auth", {
+    let x = await fetch("https://otto-backend.onrender.com/api/driver/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -21,8 +21,7 @@ function toggledetail(id) {
 //fetch rides by driver and display them
 
 onMounted(() => {
-  //  fetch("https://otto-backend.onrender.com/api/ride/getbydriver"
-  let apiUrl = "http://localhost:3000/api/ride/getbydriver";
+  let apiUrl = "https://otto-backend.onrender.com/api/ride/getbydriver";
   fetch(apiUrl, {
     method: "POST",
     headers: {
@@ -61,7 +60,6 @@ onMounted(() => {
       <span><strong>Mijn routes</strong></span>
       <div v-if="showless">
         <div v-for="ride in rides.slice(0, 2)" :key="rides.id">
-          <!-- <Routedetails v-bind:id="ride._id" v-if="detail" /> -->
           <div class="background">
             <div class="clientinfo">
               <div class="flextime">
@@ -98,7 +96,7 @@ onMounted(() => {
             <div class="clientinfo">
               <div class="flextime">
                 <img src="../assets/icons/clock.svg" alt="clock" />
-                <span>{{ moment(ride.timeStamp).format("LLL") }}</span>
+                <span>{{ moment(ride.timeStamp).format("DD MMM YYYY - HH:mm") }}</span>
               </div>
               <div class="flexadress">
                 <img src="../assets/icons/ping.svg" alt="location" />

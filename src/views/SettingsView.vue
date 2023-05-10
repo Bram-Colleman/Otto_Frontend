@@ -11,8 +11,7 @@ let profileInfo = ref();
 let logout = ref();
 
 onMounted(() => {
-  //   fetch("https://otto-backend.onrender.com/api/driver/create", {
-  fetch("http://localhost:3000/api/driver/info", {
+  fetch("https://otto-backend.onrender.com/api/driver/info", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
