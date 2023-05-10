@@ -69,7 +69,7 @@ onMounted(() => {
         <img src="../assets/icons/arrow.svg" alt="arrow" />
       </div>
       <div class="settingflex">
-        <img src="../assets/icons/notification.svg" alt="mijn profiel" />
+        <!-- <img src="../assets/icons/notification.svg" alt="mijn profiel" /> -->
         <div class="lineheight">
           <p>Meldingen</p>
         </div>
