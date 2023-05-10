@@ -91,20 +91,7 @@ async function isAuth() {
     if (data.status == "success") {
       return true;
     } else {
-      // return false;
-      let y = await fetch("http://localhost:3000/api/eldercare/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data2 = await y.json();
-      if (data2.status == "success") {
-        return true;
-      } else {
-        return false;
-      }
+      return false;
     }
   }
 
