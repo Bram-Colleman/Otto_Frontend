@@ -1,11 +1,16 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineAsyncComponent } from "vue";
+const Map = defineAsyncComponent(() =>
+  import('./Map.vue')
+);
+// import Map from "./Map.vue";
 import moment from "moment";
 
 const emits = defineEmits(["close"]);
 
 const props = defineProps(["id"]);
-const ride = ref({ destination: "", residents: [], timeStamp: "" });
+const ride = ref({ destination: [], residents: [], timeStamp: "" });
+let destination = ref();
 onMounted(() => {
   fetch("https://otto-backend.onrender.com/api/ride/getbyid", {
     method: "POST",
@@ -20,10 +25,13 @@ onMounted(() => {
     .then((data) => {
       if (data.status === "success") {
         ride.value = data.ride[0];
-        ride.value.destination =
-          ride.value.destination.split(",")[0] +
-          ", " +
-          ride.value.destination.split(",")[1].slice(5);
+        // console.log(data.ride[0]);
+        // ride.value.destination =
+        //   ride.value.destination.split(",")[0] +
+        //   ", " +
+        //   ride.value.destination.split(",")[1].slice(5);
+        destination.value = ride.value.destination;
+        console.log(destination.value);
         ride.value.timeStamp = moment(ride.value.timeStamp).format("DD MMM YYYY - HH:mm");
       } else {
         console.error("Something went wrong!");
@@ -35,6 +43,7 @@ onMounted(() => {
 <template>
   <div class="darken" @click="$emit('close')"></div>
   <div class="detail">
+    <Map :destination="destination" ></Map>
     <div class="background">
       <div>
         <div class="flexcontent">
@@ -112,6 +121,7 @@ onMounted(() => {
 .background {
   background: #ffffff;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
-  padding: 1rem 2rem ;
+  padding: 1rem 2rem;
 }
+
 </style>

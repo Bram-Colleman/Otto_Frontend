@@ -1,6 +1,6 @@
 <script setup>
 import Navigation from '../components/Navigation.vue';
-import Mapbox from '../components/Map.vue';
+import Map from '../components/Map.vue';
 
 
 
@@ -11,7 +11,7 @@ let name = localStorage.getItem('name').split(" ")[0];
   <Navigation v-bind:active="'home'" style="z-index: 1000;"></Navigation>
   <div class="card">
     <h1>Hi, {{name}} 👋</h1>
-    <Mapbox class="map"></Mapbox>
+    <Map></Map>
   </div>
 </template>
 

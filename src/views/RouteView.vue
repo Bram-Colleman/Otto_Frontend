@@ -69,16 +69,16 @@ function getNewRides() {
       .then((data) => {
         newrides.value = data.rides;
 
-        for (let i = 0; i < newrides.value.length; i++) {
-          try {
-            newrides.value[i].destination =
-              newrides.value[i].destination.split(",")[0] +
-              ", " +
-              newrides.value[i].destination.split(",")[1].slice(5);
-          } catch {
-            console.log(rides.value[i].destination);
-          }
-        }
+        // for (let i = 0; i < newrides.value.length; i++) {
+        //   try {
+        //     newrides.value[i].destination =
+        //       newrides.value[i].destination.split(",")[0] +
+        //       ", " +
+        //       newrides.value[i].destination.split(",")[1].slice(5);
+        //   } catch {
+        //     console.log(rides.value[i].destination);
+        //   }
+        // }
       });
 }
 
@@ -264,7 +264,7 @@ function accept(rideId) {
   background-color: white;
   text-align: center;
   font-weight: bold;
-  opacity: .75;
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .rideicons img {
