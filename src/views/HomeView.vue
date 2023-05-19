@@ -1,6 +1,6 @@
 <script setup>
 import Navigation from '../components/Navigation.vue';
-import Mapbox from '../components/leaflet/Map.vue';
+import Mapbox from '../components/Map.vue';
 
 
 
