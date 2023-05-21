@@ -82,16 +82,15 @@ const rover = ref({
     timezone="Europe/Amsterdam"
     is24hr
   />
-  <button class="plus" v-if="rover.start" @click="sendAvailability">+</button>
+  <button class="plus" v-if="rover.start" @click="sendAvailability">Voeg beschikbaarheid toe</button>
 </template>
 
 <style>
 .plus {
   line-height: 0;
-  font-size: 2rem;
-  position: absolute;
-  border-radius: 50%;
-  width: 60px;
+  font-size: 1rem;
+  border-radius: 15px;
+  width: 100%;
   height: 60px;
   left: calc(50% - 60px / 2 + 150px);
   top: calc(50% - 60px / 2 + 260px);
