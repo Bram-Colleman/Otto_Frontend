@@ -5,10 +5,17 @@ import DatePicker from "../components/Calendar.vue";
 
 <template>
   <Navigation v-bind:active="'calender'"></Navigation>
+  <h1>Beschikbaarheden</h1>
   <div class="card">
-    <h1>Beschikbaarheden</h1>
     <DatePicker />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+h1 {
+  color: white;
+  position: fixed;
+  top: 3.5rem;
+  width: 100vw;
+}
+</style>
