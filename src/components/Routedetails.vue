@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineAsyncComponent, computed } from "vue";
+const Map = defineAsyncComponent(() => import("./Map.vue"));
+// import Map from "./Map.vue";
 import moment from "moment";
+import { useGeolocation } from "../scripts/useGeolocation";
 
+
+let componentIndex = 0;
 const emits = defineEmits(["close"]);
+let isLoading = true;
 
 const props = defineProps(["id"]);
-const ride = ref({ destination: "", residents: [], timeStamp: "" });
+const ride = ref({ destination: [], residents: [], timeStamp: "" });
+let destination = ref();
 onMounted(() => {
   fetch("https://otto-backend.onrender.com/api/ride/getbyid", {
     method: "POST",
@@ -20,11 +27,12 @@ onMounted(() => {
     .then((data) => {
       if (data.status === "success") {
         ride.value = data.ride[0];
-        ride.value.destination =
-          ride.value.destination.split(",")[0] +
-          ", " +
-          ride.value.destination.split(",")[1].slice(5);
-        ride.value.timeStamp = moment(ride.value.timeStamp).format("DD MMM YYYY - HH:mm");
+        destination.value = ride.value.destination;
+        ride.value.timeStamp = moment(ride.value.timeStamp).format(
+          "DD MMM YYYY - HH:mm"
+        );
+        componentIndex++;
+        isLoading = false;
       } else {
         console.error("Something went wrong!");
       }
@@ -35,6 +43,11 @@ onMounted(() => {
 <template>
   <div class="darken" @click="$emit('close')"></div>
   <div class="detail">
+    <Map
+      v-if="!isLoading"
+      :destination="ride.destination"
+      :key="componentIndex"
+    ></Map>
     <div class="background">
       <div>
         <div class="flexcontent">
@@ -71,7 +84,7 @@ onMounted(() => {
   width: 100vw;
   height: 100vh;
   background-color: black;
-  opacity: .5;
+  opacity: 0.5;
   position: fixed;
   top: 0;
   left: 0;
@@ -112,6 +125,6 @@ onMounted(() => {
 .background {
   background: #ffffff;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
-  padding: 1rem 2rem ;
+  padding: 1rem 2rem;
 }
 </style>
