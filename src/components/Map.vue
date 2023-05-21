@@ -6,13 +6,13 @@ import { Loader } from "@googlemaps/js-api-loader";
 const GOOGLE_MAPS_API_KEY = "AIzaSyBKhixrksRyCcnWxY2koJMH2GfDx6ywZgA";
 
 const props = defineProps(["destination"]);
-
-
 const { coords } = useGeolocation();
+
 const currPos = computed(() => ({
   lat: coords.value.latitude,
   lng: coords.value.longitude,
 }));
+
 const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY });
 const mapDiv = ref(null);
 let map;
@@ -22,19 +22,21 @@ onMounted(async () => {
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
 
+  if(!localStorage.getItem("pos") && currPos.value.lat != 0) {
+    localStorage.setItem("pos", JSON.stringify(currPos.value));
+  }
 
   map = new google.maps.Map(mapDiv.value, {
-    center: currPos.value,
+    center: JSON.parse(localStorage.getItem("pos")),
     zoom: 16,
     streetViewControl: false,
     zoomControl: false,
     fullscreenControl: false,
     mapTypeControl: false,
-    region: currPos.value
+    region: JSON.parse(localStorage.getItem("pos"))
   });
-  map.panTo(currPos.value);
   let marker = new google.maps.Marker({
-    position: currPos.value,
+    position: JSON.parse(localStorage.getItem("pos")),
     map: map,
     icon: {
       path: google.maps.SymbolPath.CIRCLE,
@@ -46,13 +48,11 @@ onMounted(async () => {
     },
   });
 
-  console.log(props.destination); //TODO
   if(props.destination) {
     const destination = computed(() => ({
       lat: props.destination[0],
       lng: props.destination[1]
     }));
-    console.log(destination.value);
 
      getDirections(map, directionsRenderer, directionsService, destination.value);
   }
@@ -65,7 +65,7 @@ const getDirections = (map, directionsRenderer, directionsService, dest) => {
   let destlng = dest.lng;
   
   const request = {
-    origin: currPos.value,
+    origin: JSON.parse(localStorage.getItem("pos")),
     destination: dest,
     optimizeWaypoints: true, //laat google snelste weg berekenen
     travelMode: "DRIVING",

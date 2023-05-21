@@ -6,9 +6,12 @@ export function useGeolocation() {
 
     let watcher = null;
     onMounted(() => {
-        if (isSupported) {
-            watcher = navigator.geolocation.watchPosition(position => (coords.value = position.coords));
-        }
+        watcher = navigator.geolocation.getCurrentPosition(position => (
+            coords.value = position.coords
+            ), function(error) {
+                console.log("Error retrieving geolocation: " + error.message);
+            });
+        
     })
     onUnmounted(() => {
         if (watcher) {
