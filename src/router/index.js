@@ -86,8 +86,9 @@ async function isAuth() {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const data = await x.json();
-    if (data.status == "success") {
+
+    if (x.status == "success") {
+      console.log("success");
       return true;
     } else {
       return false;
