@@ -87,8 +87,7 @@ async function isAuth() {
       },
     });
 
-    if (x.status == "success") {
-      console.log("success");
+    if (x.status != 403) {
       return true;
     } else {
       return false;
