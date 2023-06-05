@@ -5,7 +5,7 @@ import { useGeolocation } from "../scripts/useGeolocation";
 import { Loader } from "@googlemaps/js-api-loader";
 const GOOGLE_MAPS_API_KEY = "AIzaSyBKhixrksRyCcnWxY2koJMH2GfDx6ywZgA";
 
-const props = defineProps(["destination"]);
+const props = defineProps(["destination", "origin"]);
 const { coords } = useGeolocation();
 
 const currPos = computed(() => ({
@@ -18,6 +18,8 @@ const mapDiv = ref(null);
 let map;
 
 onMounted(async () => {
+  console.log(props);
+
   await loader.load();
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -48,12 +50,13 @@ onMounted(async () => {
     },
   });
 
-  if(props.destination) {
+  if(props.destination && props.origin) {
     const destination = computed(() => ({
       lat: props.destination[0],
       lng: props.destination[1]
     }));
-
+    //TODO: make route from origin to destination
+    
      getDirections(map, directionsRenderer, directionsService, destination.value);
   }
 });

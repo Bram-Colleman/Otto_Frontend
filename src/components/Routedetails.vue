@@ -18,6 +18,7 @@ onMounted(() => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify({
       id: props.id,
@@ -33,7 +34,7 @@ onMounted(() => {
         );
         componentIndex++;
         isLoading = false;
-        console.log(ride.value);
+        console.log(ride.value.origin);
       } else {
         console.error("Something went wrong!");
       }
@@ -47,6 +48,7 @@ onMounted(() => {
     <Map
       v-if="!isLoading"
       :destination="ride.destination"
+      :origin="ride.origin"
       :key="componentIndex"
     ></Map>
     <div class="background">
