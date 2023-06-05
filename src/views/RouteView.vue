@@ -44,16 +44,16 @@ function getRides() {
     .then((data) => {
       rides.value = data.rides;
 
-      for (let i = 0; i < rides.value.length; i++) {
-        try {
-          rides.value[i].destination =
-            rides.value[i].destination.split(",")[0] +
-            ", " +
-            rides.value[i].destination.split(",")[1].slice(5);
-        } catch {
-          console.log(rides.value[i].destination);
-        }
-      }
+      // for (let i = 0; i < rides.value.length; i++) {
+      //   try {
+      //     rides.value[i].destination =
+      //       rides.value[i].destination.split(",")[0] +
+      //       ", " +
+      //       rides.value[i].destination.split(",")[1].slice(5);
+      //   } catch {
+      //     console.log(rides.value[i].destination);
+      //   }
+      // }
     });
 }
 

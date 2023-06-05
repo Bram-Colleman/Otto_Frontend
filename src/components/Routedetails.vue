@@ -33,6 +33,7 @@ onMounted(() => {
         );
         componentIndex++;
         isLoading = false;
+        console.log(ride.value);
       } else {
         console.error("Something went wrong!");
       }
