@@ -3,16 +3,16 @@ import { onMounted, ref, defineAsyncComponent, computed } from "vue";
 const Map = defineAsyncComponent(() => import("./Map.vue"));
 // import Map from "./Map.vue";
 import moment from "moment";
-import { useGeolocation } from "../scripts/useGeolocation";
-
 
 let componentIndex = 0;
-const emits = defineEmits(["close"]);
+const emit = defineEmits(["accept"]);
 let isLoading = true;
 
-const props = defineProps(["id"]);
+const props = defineProps(["id", "accepted"]);
 const ride = ref({ destination: [], residents: [], timeStamp: "" });
 let destination = ref();
+let distance = ref("");
+
 onMounted(() => {
   fetch("https://otto-backend.onrender.com/api/ride/getbyid", {
     method: "POST",
@@ -33,48 +33,64 @@ onMounted(() => {
           "DD MMM YYYY - HH:mm"
         );
         componentIndex++;
+        // console.log(ride.value.destination[0]);
         isLoading = false;
-        console.log(ride.value.origin);
       } else {
         console.error("Something went wrong!");
       }
     });
 });
+function onDistance(d) {
+  distance.value = d;
+}
 </script>
 
 <template>
   <div class="darken" @click="$emit('close')"></div>
   <div class="detail">
-    <Map
-      v-if="!isLoading"
-      :destination="ride.destination"
-      :origin="ride.origin"
-      :key="componentIndex"
-    ></Map>
     <div class="background">
-      <div>
-        <div class="flexcontent">
-          <img src="../assets/icons/ping.svg" alt="ping" />
-          <span>Maanstraat 2, 2800 Mechelen</span>
-          <!-- <span>{{ ride.origin }}</span> -->
-        </div>
-        <div class="flexcontent">
-          <img src="../assets/icons/flag.svg" alt="vlag" />
-          <span>{{ ride.destination }}</span>
-        </div>
-        <div class="flexcontent">
-          <img src="../assets/icons/clock.svg" alt="klok" />
-          <span>{{ ride.timeStamp }}</span>
-        </div>
-        <div class="flex2">
-          <div class="flex">
-            <img src="../assets/icons/people.svg" alt="people" />
-            <span>{{ ride.residents.length }} personen</span>
+      <div class="textcontainer">
+        <div>
+          <div class="flexcontent">
+            <img src="../assets/icons/ping.svg" alt="ping" />
+            <span>{{ ride.originAddress }}</span>
           </div>
-          <div class="flex">
-            <img src="../assets/icons/twopings.svg" alt="twopings" />
-            <span>2,2 km</span>
-            <!-- <span>{{ ride.distance }}</span> -->
+          <div class="flexcontent">
+            <img src="../assets/icons/flag.svg" alt="vlag" />
+            <span>{{ ride.destinationAddress }}</span>
+          </div>
+          <div class="flexcontent">
+            <img src="../assets/icons/clock.svg" alt="klok" />
+            <span>{{ ride.timeStamp }}</span>
+          </div>
+          <div class="flex2">
+            <div class="flex">
+              <img src="../assets/icons/people.svg" alt="people" />
+              <span>{{ ride.residents.length }} personen</span>
+            </div>
+            <div class="flex">
+              <img src="../assets/icons/twopings.svg" alt="twopings" />
+              <span>{{ distance }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mapcontainer">
+        <Map
+          v-if="!isLoading"
+          :destination="ride.destination"
+          :o="ride.origin"
+          :key="componentIndex"
+          @distance="onDistance"
+        ></Map>
+      </div>
+      <div>
+        <div class="accept" v-if="!props.accepted">
+          <div>
+            <img src="../assets/icons/check.svg" alt="" @click="this.$emit('accept')">
+          </div>
+          <div>
+            <img src="../assets/icons/cross.svg" alt="" @click="this.$emit('close')">
           </div>
         </div>
       </div>
@@ -83,6 +99,36 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.accept div {
+  width: 50%;
+  text-align: center;
+}
+.accept div:first-child {
+  border-right: 1px solid #e5e5e5;
+}
+.accept img {
+  height: 1.5rem;
+}
+.accept {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+}
+.mapcontainer {
+  width: 100%;
+  height: 25vh;
+  border-radius: 0 0 1rem 1rem;
+  overflow: hidden;
+}
+.background {
+  background: #ffffff;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+}
+.textcontainer {
+  padding: 1rem 2rem;
+}
 .darken {
   width: 100vw;
   height: 100vh;
@@ -125,9 +171,5 @@ onMounted(() => {
   margin-right: 0.5rem;
 }
 
-.background {
-  background: #ffffff;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.06);
-  padding: 1rem 2rem;
-}
+
 </style>

@@ -1,11 +1,12 @@
 <script setup>
 /* eslint-disable no-undef */
-import { computed, mergeProps, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useGeolocation } from "../scripts/useGeolocation";
 import { Loader } from "@googlemaps/js-api-loader";
 const GOOGLE_MAPS_API_KEY = "AIzaSyBKhixrksRyCcnWxY2koJMH2GfDx6ywZgA";
 
-const props = defineProps(["destination", "origin"]);
+const props = defineProps(["destination", "o"]);
+const emit = defineEmits(["distance"]);
 const { coords } = useGeolocation();
 
 const currPos = computed(() => ({
@@ -18,8 +19,6 @@ const mapDiv = ref(null);
 let map;
 
 onMounted(async () => {
-  console.log(props);
-
   await loader.load();
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -50,25 +49,47 @@ onMounted(async () => {
     },
   });
 
-  if(props.destination && props.origin) {
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          if(!props.o || !props.destination){
+            map.setCenter(pos);
+          }
+        },
+        () => {
+          handleLocationError(true);
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false);
+    }
+
+  if(props.destination && props.o) {
     const destination = computed(() => ({
       lat: props.destination[0],
       lng: props.destination[1]
     }));
-    //TODO: make route from origin to destination
-    
-     getDirections(map, directionsRenderer, directionsService, destination.value);
+    const or = computed(() => ({
+      lat: props.o[0],
+      lng: props.o[1]
+    }));
+     getDirections(map, directionsRenderer, directionsService, destination.value, or.value);
   }
 });
 
 
-const getDirections = (map, directionsRenderer, directionsService, dest) => {
+const getDirections = (map, directionsRenderer, directionsService, dest, orig) => {
   directionsRenderer.setMap(map);
   let destlat = dest.lat;
   let destlng = dest.lng;
   
   const request = {
-    origin: JSON.parse(localStorage.getItem("pos")),
+    origin: orig,
     destination: dest,
     optimizeWaypoints: true, //laat google snelste weg berekenen
     travelMode: "DRIVING",
@@ -76,6 +97,7 @@ const getDirections = (map, directionsRenderer, directionsService, dest) => {
 
   directionsService.route(request, (result, status) => {
     if (status === "OK") {
+        emit("distance", result.routes[0].legs[0].distance.text);
       directionsRenderer.setDirections(result);
     }
   });
@@ -83,7 +105,7 @@ const getDirections = (map, directionsRenderer, directionsService, dest) => {
 </script>
 
 <template>
-  <div ref="mapDiv" style="width: 100%; height: 50vh;"></div>
+  <div ref="mapDiv" style="width: 100%; height: 100%;"></div>
 </template>
 
 <style scoped>

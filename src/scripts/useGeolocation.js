@@ -6,12 +6,24 @@ export function useGeolocation() {
 
     let watcher = null;
     onMounted(() => {
-        watcher = navigator.geolocation.getCurrentPosition(position => (
-            coords.value = position.coords
-            ), function(error) {
-                console.log("Error retrieving geolocation: " + error.message);
-            });
-        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                coords.value = pos;
+
+                },
+                () => {
+                handleLocationError(true);
+                }
+            );
+            } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false);
+            }
     })
     onUnmounted(() => {
         if (watcher) {
@@ -20,4 +32,5 @@ export function useGeolocation() {
     })
 
     return {coords}
+
 }
