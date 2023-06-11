@@ -3,7 +3,6 @@ import Navigation from "../components/Navigation.vue";
 import Routedetails from "../components/Routedetails.vue";
 import { onMounted, ref } from "vue";
 import moment from "moment";
-import { get } from "@vueuse/core";
 import Map from '../components/Map.vue'
 
 moment.locale("nl", {
@@ -100,6 +99,10 @@ function accept(rideId) {
       getNewRides();
     });
 }
+function onAccept(rideId) {
+  accept(rideId);
+  toggledetail(rideId);
+}
 </script>
 
 <template>
@@ -115,7 +118,8 @@ function accept(rideId) {
     <Routedetails
       v-bind:id="detailid"
       v-if="detail"
-      @close="detail = !detail"
+      @accept="onAccept(detailid)"
+      @close="toggledetail(detailid)"
     />
     <span><strong>Beschikbare routes</strong></span>
     <div v-if="newrides[0]">
@@ -131,17 +135,11 @@ function accept(rideId) {
               </div>
               <div class="flexadress">
                 <img src="../assets/icons/ping.svg" alt="location" />
-                <span>{{ ride.destination }}</span>
+                <span>{{ ride.destinationAddress.split(',')[0] }}, {{ ride.destinationAddress.split(',')[1].slice(6) }}</span>
               </div>
             </div>
-            <div class="rideicons flex">
-              <img
-                id="target"
-                src="../assets/icons/target.svg"
-                alt="target"
-                @click="toggledetail(ride._id)"
-              />
-              <img src="../assets/icons/check.svg" alt="" @click="accept(ride._id)">
+            <div class="flex">
+              <span class="info" @click="toggledetail(ride._id)">Meer info</span>
             </div>
           </div>
         </div>
@@ -161,17 +159,11 @@ function accept(rideId) {
               </div>
               <div class="flexadress">
                 <img src="../assets/icons/ping.svg" alt="location" />
-                <span>{{ ride.destination }}</span>
+                <span>{{ ride.destinationAddress.split(',')[0] }}, {{ ride.destinationAddress.split(',')[1].slice(6) }}</span>
               </div>
             </div>
-            <div class="rideicons flex">
-              <img
-                id="target"
-                src="../assets/icons/target.svg"
-                alt="target"
-                @click="toggledetail(ride._id)"
-              />
-              <img src="../assets/icons/check.svg" alt="" @click="accept(ride._id)">
+            <div class="flex">
+              <span class="info" @click="toggledetail(ride._id)">Meer info</span>
             </div>
           </div>
         </div>
@@ -186,79 +178,20 @@ function accept(rideId) {
       <span>Er zijn momenteel geen beschikbare routes</span>
     </div>
 
-    <span><strong>Mijn routes</strong></span>
-    <div v-if="rides[0]">
-      <div v-if="showless">
-        <div v-for="ride in rides.slice(0, 2)" :key="rides.id">
-          <div class="background">
-            <div class="clientinfo">
-              <div class="flextime">
-                <img src="../assets/icons/clock.svg" alt="clock" />
-                <span>{{
-                  moment(ride.timeStamp).format("DD MMM YYYY - HH:mm")
-                }}</span>
-              </div>
-              <div class="flexadress">
-                <img src="../assets/icons/ping.svg" alt="location" />
-                <span>{{ ride.destination }}</span>
-              </div>
-            </div>
-            <div class="rideicons flex">
-              <img
-                id="target"
-                src="../assets/icons/target.svg"
-                alt="target"
-                @click="toggledetail(ride._id)"
-              />
-              <img src="../assets/icons/chatblue.svg" alt="chat" />
-            </div>
-          </div>
-        </div>
-        <div class="flex" style="justify-content: flex-end">
-          <span @click="showless = !showless" class="link"
-            ><strong>Bekijk meer</strong></span
-          >
-        </div>
-      </div>
-      <div v-else>
-        <div v-for="ride in rides" :key="rides.id">
-          <div class="background">
-            <div class="clientinfo">
-              <div class="flextime">
-                <img src="../assets/icons/clock.svg" alt="clock" />
-                <span>{{ moment(ride.timeStamp).format("DD MMM YYYY - HH:mm") }}</span>
-              </div>
-              <div class="flexadress">
-                <img src="../assets/icons/ping.svg" alt="location" />
-                <span>{{ ride.destination }}</span>
-              </div>
-            </div>
-            <div class="rideicons flex">
-              <img
-                id="target"
-                src="../assets/icons/target.svg"
-                alt="target"
-                @click="toggledetail(ride._id)"
-              />
-              <img src="../assets/icons/chatblue.svg" alt="chat" />
-            </div>
-          </div>
-        </div>
-        <div class="flex" style="justify-content: flex-end">
-          <span @click="showless = !showless" class="link"
-            ><strong>Bekijk minder</strong></span
-          >
-        </div>
-      </div>
+   
     </div>
 
     <div v-if="rides[0] === undefined" class="msg">
       <span>Je hebt geen routes gepland</span>
     </div>
-  </div>
 </template>
 
 <style scoped>
+.info {
+  color: #3289f3;
+  cursor: pointer;
+  font-weight: bold;
+}
 .dragbar {
   width: 5rem;
   height: .4rem;
@@ -282,6 +215,8 @@ h1 {
   top: 10rem;
   left: 0;
   width: 100%;
+  height: calc(100vh - 25rem);
+  flex-grow: 1;
 }
 .link {
   text-align: right;
@@ -292,6 +227,7 @@ h1 {
   top: 25rem;
   padding-bottom: 8rem;
   padding-top: 1rem;
+  width: calc(100vw - 3rem);
 
 }
 .msg {
