@@ -59,6 +59,9 @@ async function sendMessage(m) {
         <div v-if="m.sender == chat.driver._id" class="flex col">
             <span class="sent">{{ m.text }}</span>
         </div>
+        <div v-if="m.sender == chat.eldercare._id" class="flex col">
+            <span class="received">{{ m.text }}</span>
+        </div>
         <!-- <span class="sent">sent message1</span> -->
       </div>
     </div>
