@@ -1,11 +1,10 @@
 <script setup>
 import { onMounted, ref, defineAsyncComponent, computed } from "vue";
+import moment from "moment";
 const Map = defineAsyncComponent(() => import("./Map.vue"));
 // import Map from "./Map.vue";
-import moment from "moment";
 
 let componentIndex = 0;
-const emit = defineEmits(["accept"]);
 let isLoading = true;
 
 const props = defineProps(["id", "accepted"]);
@@ -87,10 +86,18 @@ function onDistance(d) {
       <div>
         <div class="accept" v-if="!props.accepted">
           <div>
-            <img src="../assets/icons/check.svg" alt="" @click="this.$emit('accept')">
+            <img
+              src="../assets/icons/check.svg"
+              alt=""
+              @click="this.$emit('accept')"
+            />
           </div>
           <div>
-            <img src="../assets/icons/cross.svg" alt="" @click="this.$emit('close')">
+            <img
+              src="../assets/icons/cross.svg"
+              alt=""
+              @click="this.$emit('close')"
+            />
           </div>
         </div>
       </div>
@@ -172,6 +179,4 @@ function onDistance(d) {
 .flexcontent img {
   margin-right: 0.5rem;
 }
-
-
 </style>
