@@ -95,6 +95,7 @@ function accept(rideId) {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       getRides();
       getNewRides();
     });
@@ -177,13 +178,7 @@ function onAccept(rideId) {
     <div v-else class="msg" style="margin: 2rem 0 1rem">
       <span>Er zijn momenteel geen beschikbare routes</span>
     </div>
-
-   
-    </div>
-
-    <div v-if="rides[0] === undefined" class="msg">
-      <span>Je hebt geen routes gepland</span>
-    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -228,7 +223,7 @@ h1 {
   padding-bottom: 8rem;
   padding-top: 1rem;
   width: calc(100vw - 3rem);
-
+	animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .msg {
   height: 3rem;
@@ -268,5 +263,15 @@ h1 {
   border-radius: 5px;
   margin: 0.75rem 0;
   padding: 1.5rem 1.5rem;
+}
+@keyframes slide-in-bottom {
+  0% {
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 </style>

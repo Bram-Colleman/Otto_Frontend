@@ -7,7 +7,9 @@ import DatePicker from "../components/Calendar.vue";
   <Navigation v-bind:active="'calender'"></Navigation>
   <h1>Beschikbaarheden</h1>
   <div class="card">
-    <DatePicker />
+    <div class="scale-in-center" >
+      <DatePicker />
+    </div>
   </div>
 </template>
 
@@ -17,5 +19,18 @@ h1 {
   position: fixed;
   top: 3.5rem;
   width: 100vw;
+}
+.scale-in-center {
+	animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>
