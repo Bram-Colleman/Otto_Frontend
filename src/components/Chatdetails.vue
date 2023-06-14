@@ -47,7 +47,7 @@ async function sendMessage(m) {
         class="back"
       />
       <img
-        src="https://avatars.githubusercontent.com/u/72066149?v=4"
+        :src="props.chat.eldercare.profilepicture"
         alt=""
         class="pp"
       />

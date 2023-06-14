@@ -117,7 +117,7 @@ function atSent() {
   <div class="card">
     <!-- chat component -->
     <div class="flex comp" @click="open(c)" v-for="c in chats">
-      <img class="profilepic" src="https://avatars.githubusercontent.com/u/72066149?v=4" alt="">
+      <img class="profilepic" :src="c.eldercare.profilepicture" alt="">
       <div class="flex col">
         <span class="name">{{ c.eldercare.name }}</span>
         <div v-if="c.messages[0]">

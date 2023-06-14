@@ -95,7 +95,17 @@ function accept(rideId) {
   })
     .then((response) => response.json())
     .then((data) => {
-      createChat(data.ride.eldercare);
+      fetch(`https://otto-backend.onrender.com/api/eldercare/${data.ride.residents[0].eldercare}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          createChat(data.eldercare);
+        });
     });
 }
 function onAccept(rideId) {
