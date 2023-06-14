@@ -105,7 +105,6 @@ function atSent() {
   });
   })
 
-
   getChats();
 }
 </script>
@@ -121,7 +120,7 @@ function atSent() {
       <img class="profilepic" src="https://avatars.githubusercontent.com/u/72066149?v=4" alt="">
       <div class="flex col">
         <span class="name">{{ c.eldercare.name }}</span>
-        <div>
+        <div v-if="c.messages[0]">
           <span class="msg">{{ c.messages[c.messages.length-1].text }} &middot; </span> 
           <span class="msg" v-if="Math.ceil((Date.now() - new Date(c.messages[c.messages.length-1].timestamp)) /1000) < 60">
              {{ Math.ceil((Date.now() - new Date(c.messages[c.messages.length-1].timestamp)) /1000) + 's' }}
@@ -141,6 +140,9 @@ function atSent() {
           <span class="msg" v-if="Math.ceil((Date.now() - new Date(c.messages[c.messages.length-1].timestamp)) /1000 ) <  1886976000 && Math.ceil((Date.now() - new Date(c.messages[c.messages.length-1].timestamp)) /1000 ) >=  36288000 ">
              {{ Math.floor((Date.now() - new Date(c.messages[c.messages.length-1].timestamp)) /1000 /60 /60 /24) + 'j' }}
           </span>
+        </div>
+        <div v-else>
+          <span class="msg">Nieuwe chat</span> 
         </div>
       </div>
     </div>

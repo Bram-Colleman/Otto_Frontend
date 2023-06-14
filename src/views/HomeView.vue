@@ -51,16 +51,16 @@ function getRides() {
   </div>
   <!-- <div class="card">
   </div> -->
+  <Routedetails
+    v-bind:id="detailid"
+    v-if="detail"
+    @close="toggledetail(detailid)"
+    :accepted="true"
+  />
   <div class="card">
     <div class="flex dragcontainer">
       <div class="dragbar"></div>
     </div>
-    <Routedetails
-      v-bind:id="detailid"
-      v-if="detail"
-      @close="toggledetail(detailid)"
-      :accepted="true"
-    />
     <span><strong>Mijn routes</strong></span>
     <div v-if="rides[0]">
       <div v-if="showless">

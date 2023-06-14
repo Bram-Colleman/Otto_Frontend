@@ -137,6 +137,7 @@ function onDistance(d) {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
 }
 .detail {
   position: fixed;
@@ -144,6 +145,7 @@ function onDistance(d) {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   width: 80%;
+  z-index: 1001;
 }
 .flex2 {
   display: flex;
