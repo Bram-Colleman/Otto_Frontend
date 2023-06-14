@@ -85,7 +85,8 @@ function getRides() {
                 alt="target"
                 @click="toggledetail(ride._id)"
               />
-              <img src="../assets/icons/chatblue.svg" alt="chat" />
+              <RouterLink to="/chat"><img src="../assets/icons/chatblue.svg" id="chat"></RouterLink>
+
             </div>
           </div>
         </div>
