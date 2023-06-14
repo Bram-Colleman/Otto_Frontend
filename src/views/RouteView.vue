@@ -95,7 +95,7 @@ function accept(rideId) {
   })
     .then((response) => response.json())
     .then((data) => {
-      createChat(data.ride.eldercare._id);
+      createChat(data.ride.eldercare);
     });
 }
 function onAccept(rideId) {
