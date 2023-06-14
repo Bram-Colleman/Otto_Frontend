@@ -28,7 +28,7 @@ onMounted(() => {
       if (data.status === "success") {
         ride.value = data.ride[0];
         destination.value = ride.value.destination;
-        ride.value.timeStamp = moment(ride.value.timeStamp).format(
+        ride.value.timeStamp = moment(Date.parse(ride.value.timeStamp) - 7200000).format(
           "DD MMM YYYY - HH:mm"
         );
         componentIndex++;

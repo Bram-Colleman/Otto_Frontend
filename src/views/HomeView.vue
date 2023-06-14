@@ -70,7 +70,7 @@ function getRides() {
               <div class="flextime">
                 <img src="../assets/icons/clock.svg" alt="clock" />
                 <span>{{
-                  moment(ride.timeStamp).format("DD MMM YYYY - HH:mm")
+                  moment(Date.parse(ride.timeStamp) - 7200000).format("DD MMM YYYY - HH:mm")
                 }}</span>
               </div>
               <div class="flexadress">
@@ -102,7 +102,7 @@ function getRides() {
             <div class="clientinfo">
               <div class="flextime">
                 <img src="../assets/icons/clock.svg" alt="clock" />
-                <span>{{ moment(ride.timeStamp).format("DD MMM YYYY - HH:mm") }}</span>
+                <span>{{ moment(Date.parse(ride.timeStamp) - 7200000).format("DD MMM YYYY - HH:mm") }}</span>
               </div>
               <div class="flexadress">
                 <img src="../assets/icons/ping.svg" alt="location" />
