@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, defineAsyncComponent, computed } from "vue";
+import { onMounted, ref, defineAsyncComponent } from "vue";
 import moment from "moment";
 const Map = defineAsyncComponent(() => import("./Map.vue"));
 // import Map from "./Map.vue";
@@ -65,7 +65,7 @@ function onDistance(d) {
           <div class="flex2">
             <div class="flex">
               <img src="../assets/icons/people.svg" alt="people" />
-              <span>{{ ride.residents.length }} personen</span>
+              <span>{{ ride.residents.length }} persoon</span>
             </div>
             <div class="flex">
               <img src="../assets/icons/twopings.svg" alt="twopings" />
