@@ -66,7 +66,7 @@ async function sendMessage(m) {
       </div>
     </div>
     <div class="flex bottomcontrol">
-      <input type="text" placeholder="Schrijf een bericht" v-model="text" />
+      <input type="text" placeholder="Schrijf een bericht" v-model="text" @keyup.enter="sendMessage(text)" />
       <img src="../assets/icons/send.svg" alt="" @click="sendMessage(text)"  />
     </div>
   </div>
