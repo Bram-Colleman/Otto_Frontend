@@ -95,14 +95,31 @@ function accept(rideId) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      getRides();
-      getNewRides();
+      createChat(data.ride.eldercare._id);
     });
 }
 function onAccept(rideId) {
   accept(rideId);
   toggledetail(rideId);
+}
+
+async function createChat(e) {
+  let apiUrl = "https://otto-backend.onrender.com/api/chat/create";
+  await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({
+      eldercare: e
+    }),
+  })
+    .then((response) => response.json())
+    .then(async (data) => {
+      getRides();
+      getNewRides();
+    });
 }
 </script>
 
@@ -112,16 +129,16 @@ function onAccept(rideId) {
   <div class="map">
     <Map></Map>
   </div>
+  <Routedetails
+    v-bind:id="detailid"
+    v-if="detail"
+    @accept="onAccept(detailid)"
+    @close="toggledetail(detailid)"
+  />
   <div class="card">
     <div class="flex dragcontainer">
       <div class="dragbar"></div>
     </div>
-    <Routedetails
-      v-bind:id="detailid"
-      v-if="detail"
-      @accept="onAccept(detailid)"
-      @close="toggledetail(detailid)"
-    />
     <span><strong>Beschikbare routes</strong></span>
     <div v-if="newrides[0]">
       <div v-if="newshowless">
